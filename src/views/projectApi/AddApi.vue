@@ -4,6 +4,7 @@
       <AceEditor
         class="ace_editor"
         ref="editorDom"
+        :saveCodeFn="saveCodeFn"
         v-model:content="editorContent"
       />
     </div>

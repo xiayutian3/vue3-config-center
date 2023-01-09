@@ -16,6 +16,10 @@ export default defineComponent({
       type: String as PropType<string>, //转为ts类型
       default: "",
     },
+    saveCodeFn: {
+      type: Function,
+      default: () => ({}),
+    },
   },
   emits: ["update:content"],
   setup(props, { emit, expose }) {
@@ -35,6 +39,10 @@ export default defineComponent({
       // var o = JSON.parse(val); // may throw if json is malformed
       // val = JSON.stringify(o, null, 2); // 4 is the indent size
       // editorRef.value.session.setValue(val);
+    };
+    //保存更新
+    const saveContent = () => {
+      props.saveCodeFn();
     };
     // 获取内容
     const getCode = () => {
@@ -81,6 +89,15 @@ export default defineComponent({
         editorRef.value.session.setMode("ace/mode/javascript");
         editorRef.value.setFontSize(18);
         editorRef.value.session.setUseWorker(false);
+        // editorRef.value.execCommand("find"); // 编辑内容搜索  快捷键打开->ctrl+f
+        editorRef.value.commands.addCommand({
+          name: "saveCode",
+          bindKey: { win: "Ctrl-s", mac: "Command-s" },
+          exec: function () {
+            saveContent();
+          },
+          // readOnly: false,
+        });
 
         //菜单提示
         ace.require("ace/ext/language_tools");

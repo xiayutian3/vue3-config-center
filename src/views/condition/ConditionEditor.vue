@@ -4,6 +4,7 @@
       <AceEditor
         class="ace_editor"
         ref="editorDom"
+        :saveCodeFn="saveCodeFn"
         v-model:content="editorContent"
       />
     </div>
@@ -186,6 +187,13 @@ export default defineComponent({
 
     //添加到编辑器内容区
     const addToEditor = () => {
+      if (!editorIp.value || !editorEnv.value) {
+        ElMessage({
+          type: "error",
+          message: "请输入IP,环境完整",
+        });
+        return;
+      }
       const contentObj = eval("(" + editorContent.value + ")");
       editorContent.value = JSON.stringify({
         ...contentObj,

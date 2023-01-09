@@ -4,6 +4,6 @@
 export default {
   baseUrl: {
     dev: "/api",
-    pro: "http://config-center-backend.test.glsx.com",
+    pro: "https://config-center-backend.glsx.com.cn",
   },
 };
